@@ -40,7 +40,7 @@
         android:layout_gravity="center"
         android:textColor="@color/purple_200"
         android:clickable="true"
-        android:onClick="Ir_Registrarse"/>
+        android:onClick="ir_Registrarse"/>
     <TextView
         android:id="@+id/IniciarSesion"
         android:layout_width="wrap_content"

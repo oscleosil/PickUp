@@ -13,13 +13,12 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
     }
 
-/*    public void ir_Buscar(View view){
-        Intent intent = new Intent(this, BusquedaActivity.class);
+    public void ir_Registrarse(View view){
+        Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
     }
-
-    public void ir_Registrarse(View view){
-        Intent intent = new Intent(this, RegistrarseActivity.class);
+/*    public void ir_Buscar(View view){
+        Intent intent = new Intent(this, BusquedaActivity.class);
         startActivity(intent);
     }
 

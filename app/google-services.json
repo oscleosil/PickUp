@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1040272867972",
-    "project_id": "pickup-android-app",
-    "storage_bucket": "pickup-android-app.appspot.com"
+    "project_number": "23168604239",
+    "project_id": "dam-proyecto-a3929",
+    "storage_bucket": "dam-proyecto-a3929.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1040272867972:android:8394dc52e02bb96a0678d1",
+        "mobilesdk_app_id": "1:23168604239:android:f1f227de1c43814d75b23a",
         "android_client_info": {
           "package_name": "com.dam.pickup"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1040272867972-8tm3f997mqn526fmbs1ghocv0nic1u0b.apps.googleusercontent.com",
+          "client_id": "23168604239-g93atlkshihjgr397fi2r076cnul7tan.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCyfSl__tyd2RmpHZO4bpxAx0zqCC9v0xQ"
+          "current_key": "AIzaSyA_7tyZwZQZPjZ8sYZT81wArMSepAvt4po"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1040272867972-8tm3f997mqn526fmbs1ghocv0nic1u0b.apps.googleusercontent.com",
+              "client_id": "23168604239-g93atlkshihjgr397fi2r076cnul7tan.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
