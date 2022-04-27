@@ -3,12 +3,18 @@ package com.dam.pickup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.Intent;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.tasks.*;
@@ -19,7 +25,9 @@ public class LogInActivity extends AppCompatActivity {
     private EditText password;
     private EditText confirm_password;
     private Button log_in;
-    //private Button log_in_with_google;
+    private Button log_in_with_google;
+    private enum provider{BASIC, GOOGLE};
+    private final int GOOGLE_SIGN_IN = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +37,7 @@ public class LogInActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         confirm_password = findViewById(R.id.confirm_password);
         log_in = findViewById(R.id.login);
-        //log_in_with_google = findViewById(R.id.login_with_google); ToDO
+        log_in_with_google = findViewById(R.id.login_with_google);
         setup();
     }
 
@@ -54,9 +62,15 @@ public class LogInActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),
                                                 "Usuario registrado correctamente",
                                                 Toast.LENGTH_LONG).show();
+                                        /*SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit();
+                                        prefs.putString("email", email_txt);
+                                        prefs.putString("provider", provider.BASIC.toString());
+                                        prefs.apply(); ToDo*/
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
                                     } else {
                                         Toast.makeText(getApplicationContext(),
-                                                "Se ha producido un error durante el registro, pruebe otra vez",
+                                                "Se ha producido un error, por favor, intentelo de nuevo",
                                                 Toast.LENGTH_LONG).show();
                                     }
                                 }
@@ -85,5 +99,23 @@ public class LogInActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /*log_in_with_google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 final GoogleSignInOptions google_conf = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                         .requestIdToken(getString(R.string.default_web_client_id))
+                         .requestEmail()
+                         .build();
+                final GoogleSignInClient google_client = GoogleSignIn.getClient(getApplicationContext(), google_conf);
+                startActivityForResult(google_client.getSignInIntent(), GOOGLE_SIGN_IN);
+            }
+        });*/
     }
+
+    /*@Override
+    public void onActivityResult(int request_code, int result_code, Intent intent) {
+        super.onActivityResult(request_code, result_code, intent);
+        //ToDo
+    }*/
 }

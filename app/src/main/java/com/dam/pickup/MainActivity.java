@@ -17,13 +17,13 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
     }
-/*    public void ir_Buscar(View view){
-        Intent intent = new Intent(this, BusquedaActivity.class);
-        startActivity(intent);
-    }
 
     public void ir_IniciarSesion(View view){
-        Intent intent = new Intent(this, IniciarSesionActivity.class);
+        Intent intent = new Intent(this, SignInActivity.class);
+        startActivity(intent);
+    }
+/*    public void ir_Buscar(View view){
+        Intent intent = new Intent(this, BusquedaActivity.class);
         startActivity(intent);
     }*/
 }

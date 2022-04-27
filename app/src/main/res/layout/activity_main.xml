@@ -1,5 +1,5 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -51,6 +51,6 @@
         android:layout_gravity="center"
         android:textColor="@color/purple_200"
         android:clickable="true"
-        android:onClick="Ir_IniciarSesion"/>
+        android:onClick="ir_IniciarSesion"/>
 
 </LinearLayout>
