@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:text="Indique un producto"
+        android:hint="Indique un producto"
         android:layout_marginTop="40dp"
         android:layout_gravity="center"/>
     <Button
@@ -28,7 +28,7 @@
         android:text="Buscar"
         android:layout_gravity="center_horizontal"
         android:clickable="true"
-        android:onClick="Ir_Buscar"
+        android:enabled="true"
         android:layout_marginTop="15dp"/>
     <TextView
         android:id="@+id/Registrarse"
