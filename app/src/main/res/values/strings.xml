@@ -9,4 +9,7 @@
     <string name="action_register_with_google">Log in with Google</string>
     <string name="prefs_file">com.dam.pickup.PREFERENCE_FILE_KEY></string>
     <string name="serpapi_key">82651c9eb61409d972d3d371120b8a0c2fb413bfee7a2967d267d8677ceb0e2d</string>
+    <string name="item1">Historial</string>
+    <string name="item2">Productos Guardados</string>
+    <string name="item3">Cerrar Sesión</string>
 </resources>

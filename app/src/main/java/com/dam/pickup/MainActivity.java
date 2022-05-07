@@ -2,6 +2,8 @@ package com.dam.pickup;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
@@ -32,6 +34,26 @@ public class MainActivity extends Activity {
         query = findViewById(R.id.search_tool);
         search_button = findViewById(R.id.search_button);
         setUp();
+    }
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.overflow, menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        //imprmimen texto prueba, redireccionar
+        if(id == R.id.item1){
+            Toast.makeText(getApplicationContext(), "clicaste en Historial", Toast.LENGTH_SHORT).show();
+        }else if(id == R.id.item2){
+            Toast.makeText(getApplicationContext(), "clicaste en Guardados", Toast.LENGTH_SHORT).show();
+        }else if(id == R.id.item3){
+            Toast.makeText(getApplicationContext(), "clicaste en Cerrar Sesion", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    private void show() {
     }
 
     private void setUp(){
