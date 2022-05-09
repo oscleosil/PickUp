@@ -1,9 +1,12 @@
 package com.dam.pickup;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -15,10 +18,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import android.util.Log;
 import android.app.ProgressDialog;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
@@ -41,47 +48,21 @@ public class MainActivity extends Activity {
                 System.out.println("ME HAS CLICKADO");
                 String query_txt = query.getText().toString();
                 if(!query_txt.equals("")) {
-                    final String URL = "https://serpapi.com/search.json?q=" + query.getText().toString()
+                    String URL = "https://serpapi.com/search.json?q=" + query_txt.replace(" ", "+").toLowerCase()
                             +"&api_key="+getString(R.string.serpapi_key)+"&location=Spain&google_domain=google.es&hl=es&gl=es";
                     System.out.println(URL);
                     //final ProgressDialog dialog = ProgressDialog.show(getApplicationContext(), "Cargando","Espere, por favor",true);
-                    JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            System.out.println("OBTENIENDO RESPUESTA");
-                            Log.d("Response", response.toString());
-                            //dialog.dismiss();
-                            try {
-                                JSONObject json = response.getJSONObject("search_metadata");
-                                JSONObject product_result = response.getJSONObject("product_result");
-                                String status = json.getString("status");
-                                if (status.equals("Success")) {
-                                    //create_list(product_result);
-                                } else
-                                    Toast.makeText(getApplicationContext(), "No ha sido posible obtener los datos", Toast.LENGTH_SHORT).show();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            VolleyLog.v("Response:%n %s", response);
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("Error.Response", error.toString());
-                        }
-                    });
-                    SearchApplication.getInstance().getRequestQueue().add(req);
+                    Bundle b = new Bundle();
+                    b.putString("URL", URL);
+                    Intent act = new Intent(getApplicationContext(), SearchActivity.class);
+                    act.putExtras(b);
+                    startActivity(act);
                 }
                 else
                     Toast.makeText(getApplicationContext(), "Indique un producto", Toast.LENGTH_SHORT).show();
 
             }
         });
-    }
-
-    private void create_list(JSONObject json){
-      View v = getLayoutInflater().inflate(R.layout.activity_search, null);
-      ListView lista = new ListView(getApplicationContext());
     }
 
     public void ir_Registrarse(View view){
