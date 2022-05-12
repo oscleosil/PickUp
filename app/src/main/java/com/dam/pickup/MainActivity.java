@@ -1,40 +1,81 @@
 package com.dam.pickup;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.content.Intent;
-import android.widget.Button;
-import android.widget.EditText;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-import android.util.Log;
-import android.app.ProgressDialog;
-import android.widget.ListView;
-import android.widget.Toast;
+import com.google.android.material.navigation.NavigationView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends Activity {
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-    private EditText query;
-    private Button search_button;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+   // private EditText query;
+   // private Button search_button;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    Toolbar toolbar;
+    NavigationView navigationView;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        query = findViewById(R.id.search_tool);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawerLayout =findViewById(R.id.drawer);
+        navigationView = findViewById(R.id.navigationview);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggle.syncState();
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.container_fragment,new MainFragment());
+        fragmentTransaction.commit();
+
+
+
+       /* query = findViewById(R.id.search_tool);
         search_button = findViewById(R.id.search_button);
         setUp();
+
+        */
     }
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        //para cerrar automaticamente el menu
+        drawerLayout.closeDrawer(GravityCompat.START);
+        if(menuItem.getItemId() == R.id.home){
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_fragment,new MainFragment());
+            fragmentTransaction.commit();
+        }
+
+        if(menuItem.getItemId() == R.id.historial){
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_fragment,new historial_fragment());
+            fragmentTransaction.commit();
+        }
+
+
+        return false;
+    }
+
+    /*
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.overflow, menu);
         return true;
@@ -115,4 +156,6 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
+
+        */
 }
