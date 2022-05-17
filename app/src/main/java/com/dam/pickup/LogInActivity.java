@@ -45,21 +45,48 @@ public class LogInActivity extends AppCompatActivity {
         setup();
     }
 
+    private boolean check_fields(){
+        boolean control = true;
+        String email_txt = email.getText().toString();
+        String pass_txt = password.getText().toString();
+        String conf_pass_txt = confirm_password.getText().toString();
+        if((email_txt.equals("")) || (pass_txt.equals("")) || (conf_pass_txt.equals(""))){
+            control = false;
+            Toast.makeText(getApplicationContext(),
+                    "Debes completar todos los campos para poder registrarte",
+                    Toast.LENGTH_LONG).show();
+        }
+        else if(!pass_txt.equals(conf_pass_txt)){
+            control = false;
+            Toast.makeText(getApplicationContext(),
+                    "Los campos 'Password' y 'Confirm password' deben coincidir",
+                    Toast.LENGTH_LONG).show();
+        }
+        else if(!email_txt.contains("@gmail") || !email_txt.contains("@hotmail")){
+            control = false;
+            Toast.makeText(getApplicationContext(),
+                    "El correo introducido no es valido",
+                    Toast.LENGTH_LONG).show();
+        }
+        else if(pass_txt.length()<6){
+            control = false;
+            Toast.makeText(getApplicationContext(),
+                    "La contraseña debe tener al menos 6 caracteres",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        return control;
+    }
+
     private void setup(){
-        System.out.println("EN FUNCION SETUP");
         log_in.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                System.out.println("ME HAS CLICKADO");
                 String email_txt = email.getText().toString();
                 String pass_txt = password.getText().toString();
-                String conf_pass_txt = confirm_password.getText().toString();
-                if((!email_txt.equals("")) && (!pass_txt.equals("")) && (!conf_pass_txt.equals(""))){
-                    if(pass_txt.equals(conf_pass_txt)){
-                        //Then login
-                        if(pass_txt.length()>=6){
-                            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_txt,
-                                    pass_txt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                if(check_fields()){
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_txt,
+                            pass_txt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
@@ -81,27 +108,8 @@ public class LogInActivity extends AppCompatActivity {
 
                             });
                         }
-                        else{
-                            Toast.makeText(getApplicationContext(),
-                                    "La contraseña debe tener al menos 6 caracteres",
-                                    Toast.LENGTH_LONG).show();
-                        }
 
                     }
-                    else{
-                        //Show a toast with error text
-                        Toast.makeText(getApplicationContext(),
-                                "Los campos 'Password' y 'Confirm password' deben coincidir",
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-                else {
-                    //Show a toast with error text
-                    Toast.makeText(getApplicationContext(),
-                            "Debes completar todos los campos para poder registrarte",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
         });
 
         log_in_with_google.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +157,10 @@ public class LogInActivity extends AppCompatActivity {
 
                     });;
                 }
+                else
+                    Toast.makeText(getApplicationContext(),
+                            "La cuenta utilizada no existe",
+                            Toast.LENGTH_LONG).show();
             } catch (ApiException e) {
                 e.printStackTrace();
             }

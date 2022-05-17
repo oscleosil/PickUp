@@ -17,13 +17,15 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView_producto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="Nombre producto"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_gravity="left" />
 
@@ -31,7 +33,9 @@
             android:id="@+id/textView_precio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:text="Precio"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_gravity="left" />
 
@@ -39,7 +43,9 @@
             android:id="@+id/textView_vendedor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:text="Nombre  del proveedor"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_gravity="left" />
 
@@ -47,7 +53,9 @@
             android:id="@+id/textView_descripcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:text="Detalles del producto"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_gravity="left" />
 
@@ -55,7 +63,7 @@
             android:id="@+id/textView_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:textSize="2dp"
             android:visibility="invisible"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_gravity="left" />

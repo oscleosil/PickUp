@@ -54,10 +54,14 @@ public class SearchActivity extends AppCompatActivity {
                         String status = json.getString("status");
                         if (status.equals("Success")) {
                             create_list(product_result);
-                        } else
-                            Toast.makeText(getApplicationContext(), "No ha sido posible obtener los datos", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Se ha producido un error, intentelo de nuevo", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "No ha sido posible obtener los datos", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                     VolleyLog.v("Response:%n %s", response);
                 }

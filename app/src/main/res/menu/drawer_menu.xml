@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:textStyle="bold"
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="Home">
+    </item>
+    <item
+        android:textStyle="bold"
+        android:id="@+id/historial"
+        android:icon="@drawable/ic_history"
+        android:title="Historial">
+    </item>
+    <item
+        android:textStyle="bold"
+        android:id="@+id/productos_guardados"
+        android:icon="@drawable/ic_save"
+        android:title="Productos Guardados">
+    </item>
+    <item
+        android:textStyle="bold"
+        android:id="@+id/cerrar_sesion"
+        android:icon="@drawable/ic_off"
+        android:title="Cerrar Sesión">
+    </item>
+</menu>
