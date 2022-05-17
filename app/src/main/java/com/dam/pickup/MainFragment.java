@@ -57,25 +57,22 @@ public class MainFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        session();
+        //session();
     }
 
     private void session(){
-        //ToDo
-        //SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit();
-        //String email = prefs.getString("email", null);
-        //String provider = prefs.getString("provider", null);
-        //if(!email.isEmpty() && !provider.isEmpty()){
-            //ToDo
-        //}
-    }
+        SharedPreferences prefs = this.getActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        String email = prefs.getString("email", null);
+        String provider = prefs.getString("provider", null);
+        if(!email.isEmpty() && !provider.isEmpty()){
 
+        }
+    }
 
     private void setUp(){
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("ME HAS CLICKADO");
                 String query_txt = query.getText().toString();
                 if(!query_txt.equals("")) {
                     String URL = "https://serpapi.com/search.json?q=" + query_txt.replace(" ", "+").toLowerCase()

@@ -6,9 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
 
@@ -53,7 +57,7 @@ public class LogInActivity extends AppCompatActivity {
         if((email_txt.equals("")) || (pass_txt.equals("")) || (conf_pass_txt.equals(""))){
             control = false;
             Toast.makeText(getApplicationContext(),
-                    "Debes completar todos los campos para poder registrarte",
+                    "Debe completar todos los campos para poder registrarse",
                     Toast.LENGTH_LONG).show();
         }
         else if(!pass_txt.equals(conf_pass_txt)){
@@ -62,7 +66,7 @@ public class LogInActivity extends AppCompatActivity {
                     "Los campos 'Password' y 'Confirm password' deben coincidir",
                     Toast.LENGTH_LONG).show();
         }
-        else if(!email_txt.contains("@gmail") || !email_txt.contains("@hotmail")){
+        else if(!email_txt.contains("@gmail") && !email_txt.contains("@hotmail")){
             control = false;
             Toast.makeText(getApplicationContext(),
                     "El correo introducido no es valido",
@@ -97,8 +101,9 @@ public class LogInActivity extends AppCompatActivity {
                                         prefs.putString("email", email_txt);
                                         prefs.putString("provider", provider.BASIC.toString());
                                         prefs.apply();
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(intent);
+                                        TextView t = findViewById(R.id.userNameHeader);
+                                        t.setText(email_txt);
+                                        finish();
                                     } else {
                                         Toast.makeText(getApplicationContext(),
                                                 "Se ha producido un error, por favor, intentelo de nuevo",

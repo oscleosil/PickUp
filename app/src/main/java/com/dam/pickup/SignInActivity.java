@@ -3,6 +3,8 @@ package com.dam.pickup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -56,19 +58,24 @@ public class SignInActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),
                                         "Se ha iniciado sesion correctamente",
                                         Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
-
+                                SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit();
+                                prefs.putString("email", email_txt);
+                                prefs.putString("provider", SignInActivity.provider.BASIC.toString());
+                                prefs.apply();
+                                finish();
                             }
                             else{
                                 Toast.makeText(getApplicationContext(),
-                                        "Se ha producido un error, por favor, intentelo de nuevo",
+                                        "Los datos introducidos son incorrectos, por favor, intentelo de nuevo",
                                         Toast.LENGTH_LONG).show();
                             }
                         }
                     });
                 }
-
+                else
+                    Toast.makeText(getApplicationContext(),
+                            "Debe completar todos los campos para poder iniciar sesion",
+                            Toast.LENGTH_LONG).show();
             }
         });
 
@@ -103,12 +110,11 @@ public class SignInActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),
                                         "Usuario registrado correctamente",
                                         Toast.LENGTH_LONG).show();
-                                        /*SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit();
-                                        prefs.putString("email", email_txt);
-                                        prefs.putString("provider", provider.BASIC.toString());
-                                        prefs.apply(); ToDo*/
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
+                                        SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit();
+                                        prefs.putString("email", account.getEmail());
+                                        prefs.putString("provider", provider.GOOGLE.toString());
+                                        prefs.apply();
+                                        finish();
                             } else {
                                 Toast.makeText(getApplicationContext(),
                                         "Se ha producido un error, por favor, intentelo de nuevo",

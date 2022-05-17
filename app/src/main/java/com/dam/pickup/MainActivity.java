@@ -1,9 +1,12 @@
 package com.dam.pickup;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,6 +65,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.commit();
         }
 
+        if (menuItem.getItemId() == R.id.cerrar_sesion) {
+            FirebaseAuth.getInstance().signOut();
+            SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit();
+            prefs.clear();
+            prefs.apply();
+        }
 
         return false;
     }
