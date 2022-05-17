@@ -76,26 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /*
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.overflow, menu);
-        return true;
-    }
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-        //imprmimen texto prueba, redireccionar
-        if(id == R.id.item1){
-            Toast.makeText(getApplicationContext(), "clicaste en Historial", Toast.LENGTH_SHORT).show();
-        }else if(id == R.id.item2){
-            Toast.makeText(getApplicationContext(), "clicaste en Guardados", Toast.LENGTH_SHORT).show();
-        }else if(id == R.id.item3){
-            Toast.makeText(getApplicationContext(), "clicaste en Cerrar Sesion", Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
-
-    private void show() {
-    }
 
     private void setUp(){
         search_button.setOnClickListener(new View.OnClickListener() {

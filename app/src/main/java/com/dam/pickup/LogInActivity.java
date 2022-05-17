@@ -2,6 +2,7 @@ package com.dam.pickup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class LogInActivity extends AppCompatActivity {
+public class LogInActivity extends FragmentActivity {
 
     private EditText email;
     private EditText password;
