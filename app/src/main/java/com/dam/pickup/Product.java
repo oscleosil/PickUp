@@ -7,8 +7,10 @@ public class Product {
     private String link;
     private String provider_name;
     private String description;
+    private String id;
 
-    public Product(String title, String price, String link, String provider_name, String description){
+    public Product(String id, String title, String price, String link, String provider_name, String description){
+        this.id = id;
         this.title = title;
         this.price = price;
         this.link = link;
@@ -54,6 +56,14 @@ public class Product {
 
     public void setDescription(String s){
         this.description = s;
+    }
+
+    public String getId(){
+        return this.id;
+    }
+
+    public void setId(String s){
+        this.id = s;
     }
 
 }

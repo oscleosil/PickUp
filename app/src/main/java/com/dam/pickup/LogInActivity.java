@@ -101,8 +101,6 @@ public class LogInActivity extends AppCompatActivity {
                                         prefs.putString("email", email_txt);
                                         prefs.putString("provider", provider.BASIC.toString());
                                         prefs.apply();
-                                        TextView t = findViewById(R.id.userNameHeader);
-                                        t.setText(email_txt);
                                         finish();
                                     } else {
                                         Toast.makeText(getApplicationContext(),

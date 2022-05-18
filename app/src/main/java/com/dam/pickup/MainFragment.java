@@ -43,6 +43,7 @@ public class MainFragment extends Fragment {
     private Button search_button;
     private TextView signIn;
     private TextView logIn;
+    public static boolean sessionActive = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.main_fragment,container,false);
@@ -60,13 +61,23 @@ public class MainFragment extends Fragment {
         //session();
     }
 
-    private void session(){
+    @Override
+    public void onResume() {
+        super.onResume();
         SharedPreferences prefs = this.getActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String email = prefs.getString("email", null);
         String provider = prefs.getString("provider", null);
-        if(!email.isEmpty() && !provider.isEmpty()){
-
+        if(email!=null && provider!=null){
+            if(!email.isEmpty() && !provider.isEmpty()) {
+                ((MainActivity) getActivity()).changeNavHeaderData(email);
+                sessionActive = true;
+            }
+            else
+                sessionActive = false;
         }
+        else
+            sessionActive = false;
+
     }
 
     private void setUp(){
