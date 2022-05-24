@@ -8,8 +8,19 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="500dp"
         android:id="@+id/history_list">
     </ListView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vaciar historial"
+        android:translationX="120dp"
+        android:translationY="550dp"
+        android:clickable="false"
+        android:enabled="true"
+        android:id="@+id/erase_history_button"
+        />
 
 </FrameLayout>

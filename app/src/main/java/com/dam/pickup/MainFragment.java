@@ -41,9 +41,10 @@ public class MainFragment extends Fragment {
 
     private EditText query;
     private Button search_button;
-    private TextView signIn;
-    private TextView logIn;
+    public static TextView signIn;
+    public static TextView logIn;
     public static boolean sessionActive = false;
+    public static String userName;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.main_fragment,container,false);
@@ -56,28 +57,28 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        //session();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         SharedPreferences prefs = this.getActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String email = prefs.getString("email", null);
         String provider = prefs.getString("provider", null);
-        if(email!=null && provider!=null){
-            if(!email.isEmpty() && !provider.isEmpty()) {
-                ((MainActivity) getActivity()).changeNavHeaderData(email);
-                sessionActive = true;
-            }
-            else
-                sessionActive = false;
+        if((email!=null && provider!=null) && (!email.isEmpty() && !provider.isEmpty())){
+            ((MainActivity) getActivity()).changeNavHeaderData(email);
+            sessionActive = true;
+            userName = email;
+            signIn.setVisibility(View.INVISIBLE);
+            logIn.setVisibility(View.INVISIBLE);
+            signIn.setEnabled(false);
+            logIn.setEnabled(false);
         }
-        else
+        else {
             sessionActive = false;
-
+            userName = "";
+            signIn.setVisibility(View.VISIBLE);
+            logIn.setVisibility(View.VISIBLE);
+            signIn.setEnabled(true);
+            logIn.setEnabled(true);
+        }
     }
 
     private void setUp(){
@@ -92,6 +93,7 @@ public class MainFragment extends Fragment {
                     //final ProgressDialog dialog = ProgressDialog.show(getApplicationContext(), "Cargando","Espere, por favor",true);
                     Bundle b = new Bundle();
                     b.putString("URL", URL);
+                    b.putString("query", query_txt);
                     Intent act = new Intent(getActivity(), SearchActivity.class);
                     act.putExtras(b);
                     startActivity(act);

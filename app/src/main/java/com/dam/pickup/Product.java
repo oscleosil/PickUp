@@ -9,6 +9,18 @@ public class Product {
     private String description;
     private String id;
 
+    public Product(){
+
+    }
+
+    public Product(String title, String price, String link, String provider_name, String description){
+        this.title = title;
+        this.price = price;
+        this.link = link;
+        this.provider_name = provider_name;
+        this.description = description;
+    }
+
     public Product(String id, String title, String price, String link, String provider_name, String description){
         this.id = id;
         this.title = title;

@@ -1,9 +1,15 @@
 package com.dam.pickup;
 
+import static android.graphics.Color.GRAY;
+import static android.graphics.Color.GREEN;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +30,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +44,8 @@ import java.util.Map;
 public class SearchActivity extends AppCompatActivity {
 
     private ListView lista;
+    private int control = 0;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,27 +53,32 @@ public class SearchActivity extends AppCompatActivity {
         Bundle b = this.getIntent().getExtras();
         if (b !=null) {
             String URL = b.getString("URL");
-            init_search(URL);
+            String query = b.getString("query");
+            init_search(URL, query);
             setContentView(R.layout.activity_search);
         }
     }
 
-    private void init_search(String URL){
+    private void init_search(String URL, String query){
         if(!URL.equals("")) {
-            //final ProgressDialog dialog = ProgressDialog.show(getApplicationContext(), "Cargando","Espere, por favor",true);
+            ProgressDialog dialog = ProgressDialog.show(SearchActivity.this, "Cargando","Espere, por favor",true);
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     System.out.println("OBTENIENDO RESPUESTA");
                     Log.d("Response", response.toString());
-                    //dialog.dismiss();
+                    dialog.dismiss();
                     try {
                         JSONObject json = response.getJSONObject("search_metadata");
                         JSONObject product_result = response.getJSONObject("product_result");
                         String status = json.getString("status");
                         if (status.equals("Success")) {
                             if(MainFragment.sessionActive){
-                                //Guardamos la busqueda en el historial
+                                Map<String, Object> p = new HashMap<>();
+                                p.put("Producto", query);
+                                p.put("URL", URL);
+                                db.collection("usuarios").document(MainFragment.userName)
+                                            .collection("historial").document(query).set(p);
                             }
                             create_list(product_result);
                         }
@@ -85,10 +100,13 @@ public class SearchActivity extends AppCompatActivity {
             });
             SearchApplication.getInstance().getRequestQueue().add(req);
         }
-        else
+        else {
             Toast.makeText(getApplicationContext(), "Indique un producto", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
     }
+
 
     private void create_list(JSONObject json) throws JSONException {
         ListView lista = findViewById(R.id.product_list);
@@ -110,6 +128,15 @@ public class SearchActivity extends AppCompatActivity {
                 TextView product_name = view.findViewById(R.id.textView_producto);
                 if (product_name!=null){
                     product_name.setText(((Product) entrada).getTitle());
+                    product_name.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String URL = ((Product) entrada).getLink();;
+                            Intent intent_web = new Intent(Intent.ACTION_VIEW);
+                            intent_web.setData(Uri.parse(URL));
+                            startActivity(intent_web);
+                        }
+                    });
                 }
                 TextView precio = view.findViewById(R.id.textView_precio);
                 if (precio!=null){
@@ -129,45 +156,39 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 if(MainFragment.sessionActive) {
                     Button save_button = view.findViewById(R.id.save_button);
+                    save_button.setBackgroundColor(getResources().getColor(R.color.purple_700));
                     save_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Map<String, Object> p = new HashMap<>();
-                            p.put("Nombre",((Product) entrada).getTitle());
-                            p.put("Precio",((Product) entrada).getPrice());
-                            p.put("Detalle",((Product) entrada).getDescription());
-                            p.put("Proveedor",((Product) entrada).getProvider_name());
-                            p.put("URL",((Product) entrada).getLink());
-                            CollectionReference productDB = FirebaseFirestore.getInstance().collection("Producto");
-                            productDB.add(p).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentReference> task) {
-                                    if(task.isSuccessful()){
-                                        Toast.makeText(getApplicationContext(),
-                                                "Producto guardado correctamente",
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                    else{
-                                        Toast.makeText(getApplicationContext(),
-                                                "No ha sido posible guardar el producto",
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
+                            p.put("Nombre", ((Product) entrada).getTitle());
+                            p.put("Precio", ((Product) entrada).getPrice());
+                            p.put("Detalle", ((Product) entrada).getDescription());
+                            p.put("Proveedor", ((Product) entrada).getProvider_name());
+                            p.put("URL", ((Product) entrada).getLink());
+                            db.collection("usuarios").document(MainFragment.userName)
+                                    .collection("productos")
+                                    .document(((Product) entrada).getLink().replace("/", "+"))
+                                    .set(p)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Producto guardado correctamente",
+                                                        Toast.LENGTH_LONG).show();
+                                                save_button.setClickable(false);
+                                                save_button.setBackgroundColor(getResources().getColor(R.color.purple_200));
+                                            } else {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "No ha sido posible guardar el producto",
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
                         }
                     });
                 }
-            }
-        });
-
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView textView_URL = view.findViewById(R.id.textView_link);
-                String URL = textView_URL.getText().toString();
-                Intent intent_web = new Intent(Intent.ACTION_VIEW);
-                intent_web.setData(Uri.parse(URL));
-                startActivity(intent_web);
             }
         });
 

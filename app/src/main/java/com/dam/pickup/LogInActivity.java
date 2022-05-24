@@ -149,8 +149,7 @@ public class LogInActivity extends AppCompatActivity {
                                         prefs.putString("email", account.getEmail());
                                         prefs.putString("provider", provider.GOOGLE.toString());
                                         prefs.apply();
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(getApplicationContext(),
                                         "Se ha producido un error, por favor, intentelo de nuevo",

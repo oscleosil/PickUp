@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
+            android:clickable="true"
             android:text="Nombre producto"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_gravity="left" />

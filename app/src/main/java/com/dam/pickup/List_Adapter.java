@@ -45,5 +45,7 @@ public abstract class List_Adapter extends BaseAdapter {
         return posicion;
     }
 
+    public void removeItem (int posicion) { entradas.remove(posicion); }
+
     public abstract void onEntry (Object entrada, View view);
 }

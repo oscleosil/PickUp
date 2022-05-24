@@ -49,7 +49,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email_txt = email.getText().toString();
                 String pass_txt = pass.getText().toString();
-                if ((!email_txt.equals("")) && (!pass.equals(""))){
+                if ((!email_txt.equals("")) && (!pass_txt.equals(""))){
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(email_txt,
                             pass_txt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override

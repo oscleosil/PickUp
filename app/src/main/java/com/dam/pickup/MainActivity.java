@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //para cerrar automaticamente el menu
         drawerLayout.closeDrawer(GravityCompat.START);
         if (menuItem.getItemId() == R.id.home) {
+            toolbar.setTitle("PickUp");
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_fragment, new MainFragment());
@@ -63,9 +64,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (menuItem.getItemId() == R.id.historial) {
+            toolbar.setTitle("Historial");
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_fragment, new HistoryFragment());
+            fragmentTransaction.commit();
+        }
+        if (menuItem.getItemId() == R.id.productos_guardados) {
+            toolbar.setTitle("Productos guardados");
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_fragment, new SavedProductsFragment());
             fragmentTransaction.commit();
         }
 
@@ -75,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             prefs.clear();
             prefs.apply();
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            MainFragment.signIn.setVisibility(View.VISIBLE);
+            MainFragment.logIn.setVisibility(View.VISIBLE);
+            MainFragment.signIn.setEnabled(true);
+            MainFragment.logIn.setEnabled(true);
             Toast.makeText(getApplicationContext(),
                     "La sesion se ha cerrado correctamente",
                     Toast.LENGTH_LONG).show();
